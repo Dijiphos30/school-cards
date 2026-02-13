@@ -1,0 +1,242 @@
+# School-project-
+Just for fun
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Card Grid Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1f2933, #020617);
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+    }
+
+    p.subtitle {
+      text-align: center;
+      margin-bottom: 32px;
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #0f172a, #111827);
+      border-radius: 14px;
+      padding: 20px 18px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.55);
+      border-color: rgba(96, 165, 250, 0.85);
+      background: radial-gradient(circle at top left, #1d283a, #020617);
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #e5e7eb;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.15);
+      color: #bfdbfe;
+      border: 1px solid rgba(59, 130, 246, 0.55);
+      white-space: nowrap;
+    }
+
+    .card:active {
+      transform: translateY(-1px) scale(0.99);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.4);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .card {
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <h1>School Project Cards</h1>
+    <p class="subtitle">
+      Tap any card to open a new window with a website loaded inside an iframe.
+    </p>
+
+    <div class="grid">
+      <div class="card" onclick="openSite(0)">
+        <span class="card-title">Card 1</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(1)">
+        <span class="card-title">Card 2</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(2)">
+        <span class="card-title">Card 3</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(3)">
+        <span class="card-title">Card 4</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(4)">
+        <span class="card-title">Card 5</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(5)">
+        <span class="card-title">Card 6</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(6)">
+        <span class="card-title">Card 7</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(7)">
+        <span class="card-title">Card 8</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(8)">
+        <span class="card-title">Card 9</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(9)">
+        <span class="card-title">Card 10</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(10)">
+        <span class="card-title">Card 11</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(11)">
+        <span class="card-title">Card 12</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(12)">
+        <span class="card-title">Card 13</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(13)">
+        <span class="card-title">Card 14</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(14)">
+        <span class="card-title">Card 15</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(15)">
+        <span class="card-title">Card 16</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(16)">
+        <span class="card-title">Card 17</span>
+        <span class="card-tag">Open site</span>
+      </div>
+      <div class="card" onclick="openSite(17)">
+        <span class="card-title">Card 18</span>
+        <span class="card-tag">Open site</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Placeholder URLs for each card.
+    // Replace each string with the website you want that card to load.
+    const cardUrls = [
+      "https://example.com",
+      "https://example.org",
+      "https://developer.mozilla.org",
+      "https://www.wikipedia.org",
+      "https://www.github.com",
+      "https://www.freecodecamp.org",
+      "https://www.w3schools.com",
+      "https://news.ycombinator.com",
+      "https://www.khanacademy.org",
+      "https://www.stackoverflow.com",
+      "https://www.reddit.com",
+      "https://www.mozilla.org",
+      "https://www.codecademy.com",
+      "https://openai.com",
+      "https://www.google.com",
+      "https://www.microsoft.com",
+      "https://www.apple.com",
+      "https://www.netflix.com"
+    ];
+
+    function openSite(index) {
+      const url = cardUrls[index];
+
+      // Open a new about:blank window.
+      const win = window.open("about:blank");
+
+      if (!win) {
+        alert("Pop-up blocked. Please allow pop-ups for this site.");
+        return;
+      }
+
+      // Create an iframe and inject it into the blank window.
+      const iframe = win.document.createElement("iframe");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url;
+
+      win.document.title = "Embedded Site";
+      win.document.body.style.margin = "0";
+      win.document.body.style.height = "100vh";
+      win.document.body.appendChild(iframe);
+    }
+  </script>
+</body>
+</html>
