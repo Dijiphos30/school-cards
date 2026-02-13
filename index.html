@@ -79,7 +79,7 @@
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(3)">
-        <span class="card-title">Deep Think</span>
+        <span class="card-title">Deep Seek</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(4)">
@@ -147,7 +147,7 @@
       "https://chat.openai.com",
       "https://copilot.microsoft.com",
       "https://www.perplexity.ai",
-      "https://deepthink.ai",
+      "https://deepseek.ai",
       "https://www.github.com",
       "https://www.freecodecamp.org",
       "https://www.w3schools.com",
@@ -167,7 +167,7 @@
     function openSite(index) {
       const url = cardUrls[index];
 
-      // For cards that should open directly in a new tab (ChatGPT, Copilot, Perplexity, Deep Think)
+      // For cards that should open directly in a new tab (ChatGPT, Copilot, Perplexity, Deep Seek)
       if (index === 0 || index === 1 || index === 2 || index === 3) {
         const newWin = window.open(url, "_blank");
         if (!newWin) {
