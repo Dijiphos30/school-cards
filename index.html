@@ -114,7 +114,7 @@
 
     <div class="grid">
       <div class="card" onclick="openSite(0)">
-        <span class="card-title">Crazy</span>
+        <span class="card-title">ChatGPT</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(1)">
@@ -189,10 +189,9 @@
   </div>
 
   <script>
-    // Placeholder URLs for each card.
-    // Replace each string with the website you want that card to load.
+    // URLs for each card.
     const cardUrls = [
-      "https://www.crazygames.com",
+      "https://chat.openai.com",
       "https://example.org",
       "https://developer.mozilla.org",
       "https://www.wikipedia.org",
@@ -215,7 +214,16 @@
     function openSite(index) {
       const url = cardUrls[index];
 
-      // Open a new about:blank window.
+      // For Card 1 (index 0) open ChatGPT directly in a new tab/window.
+      if (index === 0) {
+        const newWin = window.open(url, "_blank");
+        if (!newWin) {
+          alert("Pop-up blocked. Please allow pop-ups for this site.");
+        }
+        return;
+      }
+
+      // For other cards, open an about:blank window and inject an iframe.
       const win = window.open("about:blank");
 
       if (!win) {
@@ -223,7 +231,6 @@
         return;
       }
 
-      // Create an iframe and inject it into the blank window.
       const iframe = win.document.createElement("iframe");
       iframe.style.width = "100%";
       iframe.style.height = "100%";
