@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Card Grid Web App</title>
+  <title>AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -107,7 +107,7 @@
 </head>
 <body>
   <div class="app-container">
-    <h1>School Project Cards</h1>
+    <h1>AI</h1>
     <p class="subtitle">
       Tap any card to open a new window with a website loaded inside an iframe.
     </p>
@@ -118,7 +118,7 @@
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(1)">
-        <span class="card-title">Card 2</span>
+        <span class="card-title">Copilot</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(2)">
@@ -192,7 +192,7 @@
     // URLs for each card.
     const cardUrls = [
       "https://chat.openai.com",
-      "https://example.org",
+      "https://copilot.microsoft.com",
       "https://developer.mozilla.org",
       "https://www.wikipedia.org",
       "https://www.github.com",
@@ -216,6 +216,15 @@
 
       // For Card 1 (index 0) open ChatGPT directly in a new tab/window.
       if (index === 0) {
+        const newWin = window.open(url, "_blank");
+        if (!newWin) {
+          alert("Pop-up blocked. Please allow pop-ups for this site.");
+        }
+        return;
+      }
+
+      // For Card 2 (index 1) open Copilot directly in a new tab/window.
+      if (index === 1) {
         const newWin = window.open(url, "_blank");
         if (!newWin) {
           alert("Pop-up blocked. Please allow pop-ups for this site.");
