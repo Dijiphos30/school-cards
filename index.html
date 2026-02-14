@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html,body { height: 100%; }
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       background: radial-gradient(circle at top, #1f2933, #020617);
@@ -20,143 +20,98 @@
 
     .app-container { max-width: 1200px; width: 100%; }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 14px;
-      font-size: 2.2rem;
-      letter-spacing: 0.04em;
-    }
+    h1 { text-align: center; margin-bottom: 14px; font-size: 2.2rem; }
+    p.subtitle { text-align: center; margin-bottom: 20px; color: #9ca3af; }
 
-    p.subtitle {
-      text-align: center;
-      margin-bottom: 26px;
-      color: #9ca3af;
-      font-size: 0.95rem;
-    }
-
-    /* Larger grid items */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 20px;
+      align-items: start;
     }
 
-    /* Card base */
     .card {
       position: relative;
-      overflow: hidden; /* contain logos inside the card */
+      overflow: visible; /* allow half-bleed */
       border-radius: 16px;
       padding: 28px 22px;
       min-height: 160px;
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: flex-start;
       gap: 12px;
       cursor: pointer;
       border: 1px solid rgba(255,255,255,0.06);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      transition: transform .18s ease, box-shadow .18s ease;
       color: #fff;
     }
 
-    .card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(2,6,23,0.6);
-    }
+    .card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(2,6,23,0.6); }
 
-    .card-title {
-      font-weight: 700;
-      font-size: 1.25rem;
-      z-index: 2;
-    }
+    .card-title { font-weight: 700; font-size: 1.25rem; z-index: 2; }
+    .card-tag { font-size: 0.78rem; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); display:inline-block; z-index:2; margin-top:6px; }
 
-    .card-tag {
-      font-size: 0.78rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.95);
-      border: 1px solid rgba(255,255,255,0.06);
-      z-index: 2;
-      margin-top: 8px;
-      display: inline-block;
-    }
-
-    /* Logo container inside the card (no bleed) */
-    .logo-wrap {
+    /* Badge container: positioned so half of it is outside the card */
+    .badge {
       position: absolute;
-      right: 18px;
+      right: -50px; /* half of badge width (see .badge size) */
       bottom: 18px;
-      width: 110px;
-      height: 110px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1;
       pointer-events: none;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      transform: rotate(-8deg);
+      overflow: hidden;
+      border: 6px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(2px);
     }
 
-    /* Logo image styling for vibrancy and bold contrast */
-    .logo {
-      width: 86%;
-      height: auto;
-      display: block;
-      filter: saturate(1.6) contrast(1.25) brightness(1.05);
-      opacity: 1;
-      transform: none;
-      transition: filter .18s ease, transform .18s ease;
-      mix-blend-mode: normal;
-      -webkit-filter: saturate(1.6) contrast(1.25) brightness(1.05);
+    /* Badge inner symbol (letter or initials) */
+    .badge .mark {
+      font-weight: 800;
+      font-size: 42px;
+      color: white;
+      filter: saturate(1.6) contrast(1.25) drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+      transform: translateX(6px) rotate(6deg);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.45);
     }
 
-    .card:hover .logo {
-      transform: scale(1.04);
-      filter: saturate(1.8) contrast(1.35) brightness(1.06);
-    }
+    /* Slightly larger on hover */
+    .card:hover .badge { transform: rotate(-6deg) scale(1.04); }
 
-    /* Individual color themes (same hues as before, slightly brighter) */
-    .chatgpt {
-      background: linear-gradient(135deg, #07111a 0%, #0b1620 100%);
-      border-color: rgba(125,211,252,0.12);
-    }
+    /* Color themes for cards and matching badge colors */
+    .chatgpt { background: linear-gradient(135deg,#07111a 0%,#0b1620 100%); border-color: rgba(125,211,252,0.12); }
+    .chatgpt .badge { background: linear-gradient(135deg,#10b981,#059669); } /* green */
 
-    .copilot {
-      background: linear-gradient(135deg, #04263a 0%, #08324f 100%);
-      border-color: rgba(96,165,250,0.16);
-    }
+    .copilot { background: linear-gradient(135deg,#04263a 0%,#08324f 100%); border-color: rgba(96,165,250,0.16); }
+    .copilot .badge { background: linear-gradient(135deg,#0ea5e9,#0369a1); } /* blue */
 
-    .perplexity {
-      background: linear-gradient(135deg, #1b1f3a 0%, #2b2f5a 100%);
-      border-color: rgba(168,85,247,0.16);
-    }
+    .perplexity { background: linear-gradient(135deg,#1b1f3a 0%,#2b2f5a 100%); border-color: rgba(168,85,247,0.16); }
+    .perplexity .badge { background: linear-gradient(135deg,#7c3aed,#6d28d9); } /* purple */
 
-    .deepseek {
-      background: linear-gradient(135deg, #053022 0%, #0b3f2b 100%);
-      border-color: rgba(34,197,94,0.16);
-    }
+    .deepseek { background: linear-gradient(135deg,#053022 0%,#0b3f2b 100%); border-color: rgba(34,197,94,0.16); }
+    .deepseek .badge { background: linear-gradient(135deg,#34d399,#059669); } /* teal/green */
 
-    .openai-platform {
-      background: linear-gradient(135deg, #071028 0%, #0b2a3a 100%);
-      border-color: rgba(99,102,241,0.16);
-    }
+    .openai-platform { background: linear-gradient(135deg,#071028 0%,#0b2a3a 100%); border-color: rgba(99,102,241,0.16); }
+    .openai-platform .badge { background: linear-gradient(135deg,#6366f1,#4f46e5); } /* indigo */
 
-    .claude {
-      background: linear-gradient(135deg, #2b1f00 0%, #3a2b00 100%);
-      border-color: rgba(250,204,21,0.16);
-    }
+    .claude { background: linear-gradient(135deg,#2b1f00 0%,#3a2b00 100%); border-color: rgba(250,204,21,0.16); }
+    .claude .badge { background: linear-gradient(135deg,#f59e0b,#d97706); } /* amber */
 
-    .openai {
-      background: linear-gradient(135deg, #081026 0%, #0b1b2b 100%);
-      border-color: rgba(99,102,241,0.16);
-    }
+    .openai { background: linear-gradient(135deg,#081026 0%,#0b1b2b 100%); border-color: rgba(99,102,241,0.16); }
+    .openai .badge { background: linear-gradient(135deg,#06b6d4,#0891b2); } /* cyan */
 
-    /* Make sure small screens look good */
+    /* Responsive adjustments */
     @media (max-width: 640px) {
       .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
       .card { padding: 18px 14px; min-height: 140px; }
-      .logo-wrap { width: 86px; height: 86px; right: 12px; bottom: 12px; }
-      .logo { width: 78%; }
+      .badge { width: 84px; height: 84px; right: -42px; bottom: 12px; }
+      .badge .mark { font-size: 34px; }
     }
   </style>
 </head>
@@ -166,165 +121,74 @@
     <p class="subtitle">Tap any card to open a new window with the selected AI service.</p>
 
     <div class="grid">
-      <!-- index 0 -->
       <div class="card chatgpt" onclick="openSite(0)">
         <div>
           <div class="card-title">ChatGPT</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <!-- Replace src with a working ChatGPT/OpenAI logo URL -->
-          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="ChatGPT logo" />
-        </div>
+        <div class="badge"><div class="mark">G</div></div>
       </div>
 
-      <!-- index 1 -->
       <div class="card copilot" onclick="openSite(1)">
         <div>
           <div class="card-title">Copilot</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <!-- Replace src with a working Copilot logo URL -->
-          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Microsoft_Copilot_logo.svg" alt="Copilot logo" />
-        </div>
+        <div class="badge"><div class="mark">CP</div></div>
       </div>
 
-      <!-- index 2 -->
       <div class="card perplexity" onclick="openSite(2)">
         <div>
           <div class="card-title">Perplexity</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <!-- Replace src with a working Perplexity logo URL -->
-          <img class="logo" src="https://perplexity.ai/logo.svg" alt="Perplexity logo" />
-        </div>
+        <div class="badge"><div class="mark">P</div></div>
       </div>
 
-      <!-- index 3 -->
       <div class="card deepseek" onclick="openSite(3)">
         <div>
           <div class="card-title">Deep Seek</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <!-- Replace src with a working Deep Seek logo URL -->
-          <img class="logo" src="https://chat.deepseek.com/assets/logo.svg" alt="Deep Seek logo" />
-        </div>
+        <div class="badge"><div class="mark">DS</div></div>
       </div>
 
-      <!-- index 4 -->
       <div class="card openai-platform" onclick="openSite(4)">
         <div>
           <div class="card-title">Open AI</div>
           <div class="card-tag">Platform Chat</div>
         </div>
-        <div class="logo-wrap">
-          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI platform logo" />
-        </div>
+        <div class="badge"><div class="mark">OA</div></div>
       </div>
 
-      <!-- index 5 -->
       <div class="card claude" onclick="openSite(5)">
         <div>
           <div class="card-title">Claude</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <!-- Claude image worked for you; keep that URL or replace if needed -->
-          <img class="logo" src="https://claude.ai/favicon.ico" alt="Claude logo" />
-        </div>
+        <div class="badge"><div class="mark">C</div></div>
       </div>
 
-      <!-- index 6 -->
       <div class="card openai" onclick="openSite(6)">
         <div>
           <div class="card-title">Open AI</div>
           <div class="card-tag">Open site</div>
         </div>
-        <div class="logo-wrap">
-          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI logo" />
-        </div>
+        <div class="badge"><div class="mark">AI</div></div>
       </div>
 
-      <!-- remaining placeholder cards -->
-      <div class="card" onclick="openSite(7)">
-        <div>
-          <div class="card-title">Card 8</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(8)">
-        <div>
-          <div class="card-title">Card 9</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(9)">
-        <div>
-          <div class="card-title">Card 10</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(10)">
-        <div>
-          <div class="card-title">Card 11</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(11)">
-        <div>
-          <div class="card-title">Card 12</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(12)">
-        <div>
-          <div class="card-title">Card 13</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(13)">
-        <div>
-          <div class="card-title">Card 14</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(14)">
-        <div>
-          <div class="card-title">Card 15</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(15)">
-        <div>
-          <div class="card-title">Card 16</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(16)">
-        <div>
-          <div class="card-title">Card 17</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openSite(17)">
-        <div>
-          <div class="card-title">Card 18</div>
-          <div class="card-tag">Open site</div>
-        </div>
-      </div>
+      <!-- placeholders -->
+      <div class="card" onclick="openSite(7)"><div><div class="card-title">Card 8</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(8)"><div><div class="card-title">Card 9</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(9)"><div><div class="card-title">Card 10</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(10)"><div><div class="card-title">Card 11</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(11)"><div><div class="card-title">Card 12</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(12)"><div><div class="card-title">Card 13</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(13)"><div><div class="card-title">Card 14</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(14)"><div><div class="card-title">Card 15</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(15)"><div><div class="card-title">Card 16</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(16)"><div><div class="card-title">Card 17</div><div class="card-tag">Open site</div></div></div>
+      <div class="card" onclick="openSite(17)"><div><div class="card-title">Card 18</div><div class="card-tag">Open site</div></div></div>
     </div>
   </div>
 
