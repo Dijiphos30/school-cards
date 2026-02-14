@@ -83,15 +83,15 @@
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(4)">
-        <span class="card-title">Card 5</span>
+        <span class="card-title">Open AI</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(5)">
-        <span class="card-title">Card 6</span>
+        <span class="card-title">Claude</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(6)">
-        <span class="card-title">Card 7</span>
+        <span class="card-title">Open AI</span>
         <span class="card-tag">Open site</span>
       </div>
       <div class="card" onclick="openSite(7)">
@@ -142,15 +142,18 @@
   </div>
 
   <script>
-    // URLs for each card. Card 4 (index 3) now points to chat.deepseek.com
+    // URLs for each card. Updated per request:
+    // index 4 -> Open AI (platform.openai.com/chat)
+    // index 5 -> Claude (claude.ai)
+    // index 6 -> Open AI (openai.com)
     const cardUrls = [
       "https://chat.openai.com",
       "https://copilot.microsoft.com",
       "https://www.perplexity.ai",
       "https://chat.deepseek.com",
-      "https://www.github.com",
-      "https://www.freecodecamp.org",
-      "https://www.w3schools.com",
+      "https://platform.openai.com/chat",
+      "https://claude.ai",
+      "https://openai.com",
       "https://news.ycombinator.com",
       "https://www.khanacademy.org",
       "https://www.stackoverflow.com",
@@ -167,8 +170,8 @@
     function openSite(index) {
       const url = cardUrls[index];
 
-      // For cards that should open directly in a new tab (ChatGPT, Copilot, Perplexity, Deep Seek)
-      if (index === 0 || index === 1 || index === 2 || index === 3) {
+      // Open directly in a new tab for the primary AI cards (indices 0-6)
+      if (index >= 0 && index <= 6) {
         const newWin = window.open(url, "_blank");
         if (!newWin) {
           alert("Pop-up blocked. Please allow pop-ups for this site.");
