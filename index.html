@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html,body { height: 100%; }
+    html, body { height: 100%; }
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       background: radial-gradient(circle at top, #1f2933, #020617);
       color: #f9fafb;
       min-height: 100vh;
@@ -44,10 +44,10 @@
     /* Card base */
     .card {
       position: relative;
-      overflow: visible; /* allow logo to bleed outside */
+      overflow: hidden; /* contain logos inside the card */
       border-radius: 16px;
       padding: 28px 22px;
-      min-height: 140px;
+      min-height: 160px;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -65,7 +65,7 @@
 
     .card-title {
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       z-index: 2;
     }
 
@@ -74,66 +74,89 @@
       padding: 6px 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.95);
       border: 1px solid rgba(255,255,255,0.06);
       z-index: 2;
+      margin-top: 8px;
+      display: inline-block;
     }
 
-    /* Logo that bleeds off the card */
-    .logo {
+    /* Logo container inside the card (no bleed) */
+    .logo-wrap {
       position: absolute;
-      right: -18px;
-      bottom: -18px;
-      width: 140px;
-      height: auto;
-      opacity: 0.12;
-      pointer-events: none;
-      transform: rotate(-8deg);
+      right: 18px;
+      bottom: 18px;
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 1;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+      pointer-events: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
     }
 
-    /* Individual color themes (adjust colors as desired) */
+    /* Logo image styling for vibrancy and bold contrast */
+    .logo {
+      width: 86%;
+      height: auto;
+      display: block;
+      filter: saturate(1.6) contrast(1.25) brightness(1.05);
+      opacity: 1;
+      transform: none;
+      transition: filter .18s ease, transform .18s ease;
+      mix-blend-mode: normal;
+      -webkit-filter: saturate(1.6) contrast(1.25) brightness(1.05);
+    }
+
+    .card:hover .logo {
+      transform: scale(1.04);
+      filter: saturate(1.8) contrast(1.35) brightness(1.06);
+    }
+
+    /* Individual color themes (same hues as before, slightly brighter) */
     .chatgpt {
-      background: linear-gradient(135deg, #0b1220 0%, #0f1724 100%);
-      border-color: rgba(125,211,252,0.08);
+      background: linear-gradient(135deg, #07111a 0%, #0b1620 100%);
+      border-color: rgba(125,211,252,0.12);
     }
 
     .copilot {
-      background: linear-gradient(135deg, #05203a 0%, #08324f 100%);
-      border-color: rgba(96,165,250,0.12);
+      background: linear-gradient(135deg, #04263a 0%, #08324f 100%);
+      border-color: rgba(96,165,250,0.16);
     }
 
     .perplexity {
       background: linear-gradient(135deg, #1b1f3a 0%, #2b2f5a 100%);
-      border-color: rgba(168,85,247,0.12);
+      border-color: rgba(168,85,247,0.16);
     }
 
     .deepseek {
-      background: linear-gradient(135deg, #052b1f 0%, #0b3f2b 100%);
-      border-color: rgba(34,197,94,0.12);
+      background: linear-gradient(135deg, #053022 0%, #0b3f2b 100%);
+      border-color: rgba(34,197,94,0.16);
     }
 
     .openai-platform {
       background: linear-gradient(135deg, #071028 0%, #0b2a3a 100%);
-      border-color: rgba(99,102,241,0.12);
+      border-color: rgba(99,102,241,0.16);
     }
 
     .claude {
       background: linear-gradient(135deg, #2b1f00 0%, #3a2b00 100%);
-      border-color: rgba(250,204,21,0.12);
+      border-color: rgba(250,204,21,0.16);
     }
 
     .openai {
       background: linear-gradient(135deg, #081026 0%, #0b1b2b 100%);
-      border-color: rgba(99,102,241,0.12);
+      border-color: rgba(99,102,241,0.16);
     }
 
     /* Make sure small screens look good */
     @media (max-width: 640px) {
       .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-      .card { padding: 18px 14px; min-height: 120px; }
-      .logo { width: 110px; right: -12px; bottom: -12px; }
+      .card { padding: 18px 14px; min-height: 140px; }
+      .logo-wrap { width: 86px; height: 86px; right: 12px; bottom: 12px; }
+      .logo { width: 78%; }
     }
   </style>
 </head>
@@ -149,8 +172,10 @@
           <div class="card-title">ChatGPT</div>
           <div class="card-tag">Open site</div>
         </div>
-        <!-- Replace src with your preferred ChatGPT/OpenAI logo URL -->
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="ChatGPT logo" />
+        <div class="logo-wrap">
+          <!-- Replace src with a working ChatGPT/OpenAI logo URL -->
+          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="ChatGPT logo" />
+        </div>
       </div>
 
       <!-- index 1 -->
@@ -159,8 +184,10 @@
           <div class="card-title">Copilot</div>
           <div class="card-tag">Open site</div>
         </div>
-        <!-- Replace src with Copilot logo URL -->
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Microsoft_Copilot_logo.svg" alt="Copilot logo" />
+        <div class="logo-wrap">
+          <!-- Replace src with a working Copilot logo URL -->
+          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Microsoft_Copilot_logo.svg" alt="Copilot logo" />
+        </div>
       </div>
 
       <!-- index 2 -->
@@ -169,8 +196,10 @@
           <div class="card-title">Perplexity</div>
           <div class="card-tag">Open site</div>
         </div>
-        <!-- Replace src with Perplexity logo URL -->
-        <img class="logo" src="https://perplexity.ai/logo.svg" alt="Perplexity logo" />
+        <div class="logo-wrap">
+          <!-- Replace src with a working Perplexity logo URL -->
+          <img class="logo" src="https://perplexity.ai/logo.svg" alt="Perplexity logo" />
+        </div>
       </div>
 
       <!-- index 3 -->
@@ -179,8 +208,10 @@
           <div class="card-title">Deep Seek</div>
           <div class="card-tag">Open site</div>
         </div>
-        <!-- Replace src with Deep Seek logo URL -->
-        <img class="logo" src="https://chat.deepseek.com/assets/logo.svg" alt="Deep Seek logo" />
+        <div class="logo-wrap">
+          <!-- Replace src with a working Deep Seek logo URL -->
+          <img class="logo" src="https://chat.deepseek.com/assets/logo.svg" alt="Deep Seek logo" />
+        </div>
       </div>
 
       <!-- index 4 -->
@@ -189,8 +220,9 @@
           <div class="card-title">Open AI</div>
           <div class="card-tag">Platform Chat</div>
         </div>
-        <!-- Replace src with OpenAI platform logo if desired -->
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI platform logo" />
+        <div class="logo-wrap">
+          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI platform logo" />
+        </div>
       </div>
 
       <!-- index 5 -->
@@ -199,8 +231,10 @@
           <div class="card-title">Claude</div>
           <div class="card-tag">Open site</div>
         </div>
-        <!-- Replace src with Anthropic/Claude logo URL -->
-        <img class="logo" src="https://claude.ai/favicon.ico" alt="Claude logo" />
+        <div class="logo-wrap">
+          <!-- Claude image worked for you; keep that URL or replace if needed -->
+          <img class="logo" src="https://claude.ai/favicon.ico" alt="Claude logo" />
+        </div>
       </div>
 
       <!-- index 6 -->
@@ -209,10 +243,12 @@
           <div class="card-title">Open AI</div>
           <div class="card-tag">Open site</div>
         </div>
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI logo" />
+        <div class="logo-wrap">
+          <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/OpenAI_Logo.svg" alt="OpenAI logo" />
+        </div>
       </div>
 
-      <!-- remaining cards (placeholders) -->
+      <!-- remaining placeholder cards -->
       <div class="card" onclick="openSite(7)">
         <div>
           <div class="card-title">Card 8</div>
@@ -316,14 +352,11 @@
 
     function openSite(index) {
       const url = cardUrls[index];
-      // Open primary AI cards directly in a new tab
       if (index >= 0 && index <= 6) {
         const newWin = window.open(url, "_blank");
         if (!newWin) alert("Pop-up blocked. Please allow pop-ups for this site.");
         return;
       }
-
-      // For other cards, open about:blank and inject an iframe
       const win = window.open("about:blank");
       if (!win) { alert("Pop-up blocked. Please allow pop-ups for this site."); return; }
       const iframe = win.document.createElement("iframe");
